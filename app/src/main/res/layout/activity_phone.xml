@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PhoneActivity">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.20" />
+    />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/txtNumber"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:hint="@string/phone_number"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/country_code"
+        app:layout_constraintTop_toBottomOf="@+id/guideline">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.hbb20.CountryCodePicker
+        android:id="@+id/country_code"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_marginVertical="20dp"
+        android:layout_marginStart="10dp"
+        app:ccp_autoDetectCountry="true"
+        app:ccp_defaultNameCode="IND"
+        app:ccp_showFlag="true"
+        app:ccp_showNameCode="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guideline" />
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnGetOtp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:text="@string/get_otp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/country_code" />
+
+    <EditText
+        android:id="@+id/edtDigitOne"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="20dp"
+        android:background="@color/purple"
+        android:gravity="center"
+        android:hint="0"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        app:layout_constraintEnd_toStartOf="@id/edtDigitTwo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnGetOtp" />
+
+    <EditText
+        android:id="@+id/edtDigitTwo"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="20dp"
+        android:background="@color/purple"
+        android:gravity="center"
+        android:hint="0"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        app:layout_constraintEnd_toStartOf="@id/edtDigitThree"
+        app:layout_constraintStart_toEndOf="@id/edtDigitOne"
+        app:layout_constraintTop_toBottomOf="@id/btnGetOtp" />
+
+    <EditText
+        android:id="@+id/edtDigitThree"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="20dp"
+        android:background="@color/purple"
+        android:gravity="center"
+        android:hint="0"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        app:layout_constraintEnd_toStartOf="@id/edtDigitFour"
+        app:layout_constraintStart_toEndOf="@id/edtDigitTwo"
+        app:layout_constraintTop_toBottomOf="@id/btnGetOtp" />
+
+    <EditText
+        android:id="@+id/edtDigitFour"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="20dp"
+        android:background="@color/purple"
+        android:gravity="center"
+        android:hint="0"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        app:layout_constraintEnd_toStartOf="@id/edtDigitFive"
+        app:layout_constraintStart_toEndOf="@id/edtDigitThree"
+        app:layout_constraintTop_toBottomOf="@id/btnGetOtp" />
+
+    <EditText
+        android:id="@+id/edtDigitFive"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="20dp"
+        android:background="@color/purple"
+        android:gravity="center"
+        android:hint="0"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        app:layout_constraintEnd_toStartOf="@id/edtDigitSix"
+        app:layout_constraintStart_toEndOf="@id/edtDigitFour"
+        app:layout_constraintTop_toBottomOf="@id/btnGetOtp" />
+
+    <EditText
+        android:id="@+id/edtDigitSix"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="20dp"
+        android:background="@color/purple"
+        android:gravity="center"
+        android:hint="0"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        app:layout_constraintCircleRadius="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/edtDigitFive"
+        app:layout_constraintTop_toBottomOf="@id/btnGetOtp" />
+
+
+    <!--    <com.google.android.material.textfield.TextInputLayout-->
+    <!--        android:id="@+id/txtOtp"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_margin="20dp"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/btnGetOtp">-->
+
+    <!--        <com.google.android.material.textfield.TextInputEditText-->
+    <!--            android:id="@+id/edtOtp"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:gravity="center"-->
+    <!--            android:hint="@string/enter_otp_here"-->
+    <!--            android:inputType="phone" />-->
+
+    <!--    </com.google.android.material.textfield.TextInputLayout>-->
+
+    <TextView
+        android:id="@+id/txtResend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:text="Resend OTP"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edtDigitOne" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnVerifyOtp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:text="@string/verify_otp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtResend" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

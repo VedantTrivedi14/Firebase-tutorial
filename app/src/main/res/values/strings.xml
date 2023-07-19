@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Firebase tutorial</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="get_otp">GET OTP</string>
+    <string name="enter_otp_here">Enter OTP Here</string>
+    <string name="verify_otp">VERIFY OTP</string>
+</resources>
