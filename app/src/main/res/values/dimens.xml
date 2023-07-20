@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="width_height">50dp</dimen>
+    <dimen name="vertical_margin">20dp</dimen>
+    <dimen name="ccp_height">60dp</dimen>
+    <dimen name="cpp_margin_start">10dp</dimen>
+    <dimen name="margin">20dp</dimen>
+    <dimen name="width_txt">0dp</dimen>
+    <dimen name="txt_start_margin">20dp</dimen>
+    <dimen name="margin_top">10dp</dimen>
+    <dimen name="text_size">20sp</dimen>
+</resources>

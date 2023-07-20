@@ -1,10 +1,9 @@
 package com.example.firebasetutorial
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.firebasetutorial.databinding.ActivityRegistrationBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -14,6 +13,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+
 
 class RegistrationActivity : AppCompatActivity() {
 
@@ -55,6 +55,7 @@ class RegistrationActivity : AppCompatActivity() {
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode==10001){
@@ -62,7 +63,7 @@ class RegistrationActivity : AppCompatActivity() {
             val account = task.getResult(ApiException::class.java)
             val credential = GoogleAuthProvider.getCredential(account.idToken,null)
             FirebaseAuth.getInstance().signInWithCredential(credential)
-                .addOnCompleteListener { task->
+                .addOnCompleteListener { task ->
                     if(task.isSuccessful){
                         val intent = Intent(this,MainActivity::class.java)
                         startActivity(intent)

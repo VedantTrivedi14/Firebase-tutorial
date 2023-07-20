@@ -10,10 +10,10 @@
         android:id="@+id/txtLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:text="Registration"
+        android:layout_margin="@dimen/margin"
+        android:text="@string/registration"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="@dimen/text_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -22,8 +22,8 @@
         android:id="@+id/txtEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:hint="Email"
+        android:layout_margin="@dimen/margin"
+        android:hint="@string/email"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/txtLogin">
 
@@ -38,8 +38,8 @@
         android:id="@+id/txtPwd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:hint="Password"
+        android:layout_margin="@dimen/margin"
+        android:hint="@string/password"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/txtEmail">
 
@@ -56,16 +56,16 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="20dp"
+        android:layout_margin="@dimen/margin"
         app:layout_constraintTop_toBottomOf="@id/txtPwd"
-        android:text="Register" />
+        android:text="@string/register" />
 
     <TextView
         android:id="@+id/txtRegisterNow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        android:text="Already have an Account? Login now"
+        android:text="@string/already_have_an_account_login_now"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btnRegister" />
@@ -75,7 +75,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:icon="@drawable/baseline_g_translate_24"
-        android:text="Register With Google Account"
+        android:text="@string/register_with_google_account"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/txtRegisterNow"

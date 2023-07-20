@@ -12,13 +12,13 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.20" />
-    />
+
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/txtNumber"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/width_txt"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_margin="@dimen/margin"
         android:hint="@string/phone_number"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
@@ -36,9 +36,9 @@
     <com.hbb20.CountryCodePicker
         android:id="@+id/country_code"
         android:layout_width="wrap_content"
-        android:layout_height="60dp"
-        android:layout_marginVertical="20dp"
-        android:layout_marginStart="10dp"
+        android:layout_height="@dimen/ccp_height"
+        android:layout_marginVertical="@dimen/vertical_margin"
+        android:layout_marginStart="@dimen/cpp_margin_start"
         app:ccp_autoDetectCountry="true"
         app:ccp_defaultNameCode="IND"
         app:ccp_showFlag="true"
@@ -51,7 +51,7 @@
         android:id="@+id/btnGetOtp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_margin="@dimen/margin"
         android:text="@string/get_otp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -59,27 +59,32 @@
 
     <EditText
         android:id="@+id/edtDigitOne"
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="20dp"
+        android:layout_width="@dimen/width_height"
+        android:layout_height="@dimen/width_height"
+        android:layout_marginVertical="@dimen/vertical_margin"
+        android:autofillHints="true"
         android:background="@color/purple"
         android:gravity="center"
-        android:hint="0"
+        android:hint="@string/_0"
+        android:inputType="number"
         android:textColor="@color/white"
         android:textColorHint="@color/white"
         app:layout_constraintEnd_toStartOf="@id/edtDigitTwo"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnGetOtp" />
+        app:layout_constraintTop_toBottomOf="@id/btnGetOtp"
+        tools:ignore="DuplicateSpeakableTextCheck" />
 
     <EditText
         android:id="@+id/edtDigitTwo"
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="20dp"
+        android:layout_width="@dimen/width_height"
+        android:layout_height="@dimen/width_height"
+        android:layout_marginVertical="@dimen/vertical_margin"
         android:background="@color/purple"
         android:gravity="center"
-        android:hint="0"
+        android:hint="@string/_0"
         android:textColor="@color/white"
+        android:inputType="number"
+        android:autofillHints="true"
         android:textColorHint="@color/white"
         app:layout_constraintEnd_toStartOf="@id/edtDigitThree"
         app:layout_constraintStart_toEndOf="@id/edtDigitOne"
@@ -87,12 +92,14 @@
 
     <EditText
         android:id="@+id/edtDigitThree"
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="20dp"
+        android:layout_width="@dimen/width_height"
+        android:layout_height="@dimen/width_height"
+        android:layout_marginVertical="@dimen/vertical_margin"
         android:background="@color/purple"
         android:gravity="center"
-        android:hint="0"
+        android:inputType="number"
+        android:autofillHints="true"
+        android:hint="@string/_0"
         android:textColor="@color/white"
         android:textColorHint="@color/white"
         app:layout_constraintEnd_toStartOf="@id/edtDigitFour"
@@ -101,12 +108,14 @@
 
     <EditText
         android:id="@+id/edtDigitFour"
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="20dp"
+        android:layout_width="@dimen/width_height"
+        android:layout_height="@dimen/width_height"
+        android:layout_marginVertical="@dimen/vertical_margin"
         android:background="@color/purple"
         android:gravity="center"
-        android:hint="0"
+        android:hint="@string/_0"
+        android:inputType="number"
+        android:autofillHints="true"
         android:textColor="@color/white"
         android:textColorHint="@color/white"
         app:layout_constraintEnd_toStartOf="@id/edtDigitFive"
@@ -115,12 +124,14 @@
 
     <EditText
         android:id="@+id/edtDigitFive"
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="20dp"
+        android:layout_width="@dimen/width_height"
+        android:layout_height="@dimen/width_height"
+        android:layout_marginVertical="@dimen/vertical_margin"
         android:background="@color/purple"
         android:gravity="center"
-        android:hint="0"
+        android:inputType="number"
+        android:autofillHints="true"
+        android:hint="@string/_0"
         android:textColor="@color/white"
         android:textColorHint="@color/white"
         app:layout_constraintEnd_toStartOf="@id/edtDigitSix"
@@ -129,12 +140,14 @@
 
     <EditText
         android:id="@+id/edtDigitSix"
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="20dp"
+        android:layout_width="@dimen/width_height"
+        android:layout_height="@dimen/width_height"
+        android:layout_marginVertical="@dimen/vertical_margin"
         android:background="@color/purple"
         android:gravity="center"
-        android:hint="0"
+        android:hint="@string/_0"
+        android:inputType="number"
+        android:autofillHints="true"
         android:textColor="@color/white"
         android:textColorHint="@color/white"
         app:layout_constraintCircleRadius="20dp"
@@ -142,32 +155,13 @@
         app:layout_constraintStart_toEndOf="@id/edtDigitFive"
         app:layout_constraintTop_toBottomOf="@id/btnGetOtp" />
 
-
-    <!--    <com.google.android.material.textfield.TextInputLayout-->
-    <!--        android:id="@+id/txtOtp"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_margin="20dp"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toBottomOf="@+id/btnGetOtp">-->
-
-    <!--        <com.google.android.material.textfield.TextInputEditText-->
-    <!--            android:id="@+id/edtOtp"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:gravity="center"-->
-    <!--            android:hint="@string/enter_otp_here"-->
-    <!--            android:inputType="phone" />-->
-
-    <!--    </com.google.android.material.textfield.TextInputLayout>-->
-
     <TextView
         android:id="@+id/txtResend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        android:text="Resend OTP"
+        android:layout_marginStart="@dimen/txt_start_margin"
+        android:layout_marginTop="@dimen/margin_top"
+        android:text="@string/resend_otp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/edtDigitOne" />
 
@@ -175,7 +169,7 @@
         android:id="@+id/btnVerifyOtp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_margin="@dimen/margin"
         android:text="@string/verify_otp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

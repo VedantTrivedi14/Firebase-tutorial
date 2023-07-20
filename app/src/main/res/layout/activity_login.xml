@@ -10,22 +10,22 @@
         android:id="@+id/txtLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Login"
+        android:layout_margin="@dimen/margin"
+        android:text="@string/login"
         android:textColor="@color/black"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="@dimen/text_size"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_margin="20dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/txtEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Email"
+        android:layout_margin="@dimen/margin"
+        android:hint="@string/email"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txtLogin"
-        android:layout_margin="20dp">
+        app:layout_constraintTop_toBottomOf="@id/txtLogin">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edtEmail"
@@ -38,10 +38,10 @@
         android:id="@+id/txtPwd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Password"
+        android:layout_margin="@dimen/margin"
+        android:hint="@string/password"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txtEmail"
-        android:layout_margin="20dp">
+        app:layout_constraintTop_toBottomOf="@id/txtEmail">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edtPwd"
@@ -54,45 +54,44 @@
         android:id="@+id/btnLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Login"
-        android:layout_margin="20dp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="@dimen/margin"
+        android:text="@string/login"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/txtPwd"
-
-        />
+        tools:ignore="DuplicateSpeakableTextCheck" />
 
     <TextView
         android:id="@+id/txtLoginNow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="No Account? Register now"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="@dimen/margin"
+        android:text="@string/no_account_register_now"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnLogin"
-        android:layout_margin="20dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnLogin" />
 
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnGoogleAuth"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin"
+        android:text="@string/login_with_google_account"
         app:icon="@drawable/baseline_g_translate_24"
-        android:text="Login With Google Account"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txtLoginNow"
-        android:layout_margin="20dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtLoginNow" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnPhoneAuth"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin"
+        android:text="@string/login_with_phone"
         app:icon="@drawable/baseline_phone_android_24"
-        android:text="Login With Phone"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnGoogleAuth"
-        android:layout_margin="20dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnGoogleAuth" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
