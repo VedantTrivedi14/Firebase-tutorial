@@ -40,11 +40,12 @@ class LoginActivity : AppCompatActivity() {
             .requestEmail()
             .build()
         clint = GoogleSignIn.getClient(this,options)
+
         binding.btnGoogleAuth.setOnClickListener {
             val intent =clint.signInIntent
             startActivityForResult(intent,10001)
         }
-
+//
         binding.btnPhoneAuth.setOnClickListener {
                val intent = Intent(this,PhoneActivity::class.java)
                startActivity(intent)
@@ -60,7 +61,9 @@ class LoginActivity : AppCompatActivity() {
             FirebaseAuth.getInstance().signInWithCredential(credential)
                 .addOnCompleteListener { task->
                     if(task.isSuccessful){
-                        val intent = Intent(this,MainActivity::class.java)
+                        val intent = Intent(this,ProfileActivity::class.java)
+                        intent.putExtra("email",binding.edtEmail.text.toString())
+                        intent.putExtra("pwd",binding.edtPwd.text.toString())
                         startActivity(intent)
                         Toast.makeText(this,"successfully login",Toast.LENGTH_SHORT).show()
 
@@ -86,7 +89,7 @@ class LoginActivity : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     // Sign in success,  inflate to main activity
-                    val intent = Intent(this, MainActivity::class.java)
+                    val intent = Intent(this, ProfileActivity::class.java)
                     startActivity(intent)
 
                     Toast.makeText(

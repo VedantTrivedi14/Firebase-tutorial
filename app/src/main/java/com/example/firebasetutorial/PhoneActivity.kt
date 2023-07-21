@@ -30,7 +30,6 @@ class PhoneActivity : AppCompatActivity() {
     private lateinit var otp: String
     private lateinit var resendToken: PhoneAuthProvider.ForceResendingToken
 
-    //    auth = FirebaseAuth.getInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPhoneBinding.inflate(layoutInflater)
@@ -41,8 +40,6 @@ class PhoneActivity : AppCompatActivity() {
         resendOTPTvVisibility()
 
         binding.countryCode.registerCarrierNumberEditText(binding.edtNumber)
-//        phoneNumber = binding.countryCode.fullNumberWithPlus.replace(" ","") + binding.edtNumber.text.toString()
-
 
         binding.btnGetOtp.setOnClickListener {
             Log.d("number", binding.edtNumber.text.toString())
@@ -71,7 +68,6 @@ class PhoneActivity : AppCompatActivity() {
             .setCallbacks(callbacks) // OnVerificationStateChangedCallbacks
             .build()
         PhoneAuthProvider.verifyPhoneNumber(options)
-
     }
 
     private fun isValidate(): Boolean {
@@ -104,6 +100,7 @@ class PhoneActivity : AppCompatActivity() {
 
             if (e is FirebaseAuthInvalidCredentialsException) {
                 // Invalid request
+
                 Log.d("Tag", "onVerified failed:${e.toString()}")
             } else if (e is FirebaseTooManyRequestsException) {
                 // The SMS quota for the project has been exceeded
@@ -137,13 +134,14 @@ class PhoneActivity : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     Toast.makeText(this, " authenticate successfully", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, MainActivity::class.java)
+                    val intent = Intent(this, ProfileActivity::class.java)
                     startActivity(intent)
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "signInWithCredential:success")
 
                     val user = task.result?.user
                 } else {
+                    Toast.makeText(PhoneActivity@this,"",Toast.LENGTH_SHORT).show()
                     // Sign in failed, display a message and update the UI
                     Log.w(
                         TAG,

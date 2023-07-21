@@ -24,4 +24,7 @@
     <string name="image_upload">image upload</string>
     <string name="upload">Upload</string>
     <string name="browse">Browse</string>
+    <string name="retrieve_image">Retrieve Image</string>
+    <string name="image_retrieve">Image Retrieve</string>
+    <string name="submit">Submit</string>
 </resources>
