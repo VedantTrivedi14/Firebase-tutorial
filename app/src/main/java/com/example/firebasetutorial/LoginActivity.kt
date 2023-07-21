@@ -3,6 +3,7 @@ package com.example.firebasetutorial
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import com.example.firebasetutorial.databinding.ActivityLoginBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -12,6 +13,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 
 class LoginActivity : AppCompatActivity() {
@@ -20,6 +22,8 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
     private lateinit var clint: GoogleSignInClient
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
@@ -34,6 +38,7 @@ class LoginActivity : AppCompatActivity() {
 
         binding.btnLogin.setOnClickListener {
             performLogin()
+
         }
         val options = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
@@ -62,8 +67,6 @@ class LoginActivity : AppCompatActivity() {
                 .addOnCompleteListener { task->
                     if(task.isSuccessful){
                         val intent = Intent(this,ProfileActivity::class.java)
-                        intent.putExtra("email",binding.edtEmail.text.toString())
-                        intent.putExtra("pwd",binding.edtPwd.text.toString())
                         startActivity(intent)
                         Toast.makeText(this,"successfully login",Toast.LENGTH_SHORT).show()
 
@@ -118,4 +121,6 @@ class LoginActivity : AppCompatActivity() {
 
 
     }
+
+
 }

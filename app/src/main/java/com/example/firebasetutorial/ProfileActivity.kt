@@ -2,14 +2,13 @@ package com.example.firebasetutorial
 
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import com.example.firebasetutorial.databinding.ActivityProfileBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -26,22 +25,18 @@ class ProfileActivity : AppCompatActivity() {
         binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val pwd = intent.extras!!.getString("pwd")
-        val email = intent.extras!!.getString("email")
 
         val galleryImage =
-            registerForActivityResult(ActivityResultContracts.GetContent(), ActivityResultCallback {
+            registerForActivityResult(ActivityResultContracts.GetContent()) {
                 binding.imgProfile.setImageURI(it)
                 uri = it!!
-            })
+            }
         binding.imgProfile.setOnClickListener { galleryImage.launch("image/*") }
 
 
         binding.btnSubmit.setOnClickListener {
             if (isValidate()) {
                 val profileData = hashMapOf(
-                    "email" to email,
-                    "pwd" to pwd,
                     "name" to binding.edtName.text.toString(),
                     "age" to binding.edtAge.text.toString(),
                     "url" to uri
@@ -57,6 +52,14 @@ class ProfileActivity : AppCompatActivity() {
             }
         }
 
+        binding.btnRetrieve.setOnClickListener {
+            profileRef.get().addOnSuccessListener { querySnapshot ->
+                for (document in querySnapshot.documents) {
+                    val documentId = document.id
+
+                }
+            }
+        }
     }
 
     private fun isValidate(): Boolean {

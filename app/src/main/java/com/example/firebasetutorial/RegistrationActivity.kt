@@ -2,6 +2,7 @@ package com.example.firebasetutorial
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.util.Patterns
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +14,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import java.util.regex.Pattern
 
@@ -22,7 +24,8 @@ class RegistrationActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegistrationBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var clint: GoogleSignInClient
-
+    private val db = FirebaseFirestore.getInstance()
+    private val profileRef = db.collection("profile")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,8 +41,10 @@ class RegistrationActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+
         binding.btnRegister.setOnClickListener {
             performSignUp()
+            collection()
         }
 
         val options = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -50,6 +55,7 @@ class RegistrationActivity : AppCompatActivity() {
         binding.btnGoogleAuth.setOnClickListener {
             val intent = clint.signInIntent
             startActivityForResult(intent, 10001)
+            collection()
         }
 
         binding.btnPhoneAuth.setOnClickListener {
@@ -67,6 +73,7 @@ class RegistrationActivity : AppCompatActivity() {
             val credential = GoogleAuthProvider.getCredential(account.idToken, null)
             FirebaseAuth.getInstance().signInWithCredential(credential)
                 .addOnCompleteListener { task ->
+                    task
                     if (task.isSuccessful) {
                         val intent = Intent(this, LoginActivity::class.java)
                         startActivity(intent)
@@ -130,5 +137,20 @@ class RegistrationActivity : AppCompatActivity() {
 
             }
 
+    }
+
+    private fun collection(){
+        val profileData = hashMapOf(
+            "email" to binding.edtEmail.text.toString(),
+            "pwd" to binding.edtPwd.text.toString(),
+        )
+
+        profileRef.add(profileData).addOnSuccessListener {
+            Toast.makeText(this, "data submit successfully done", Toast.LENGTH_SHORT)
+                .show()
+        }
+            .addOnFailureListener {
+                Log.d("tag", "add document with id $it")
+            }
     }
 }
