@@ -20,12 +20,17 @@ class ProfileActivity : AppCompatActivity() {
     private val db = FirebaseFirestore.getInstance()
     private val profileRef = db.collection("profile")
 
+    //    private lateinit var uid: String
+    val auth = FirebaseAuth.getInstance()
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
 
+//        uid = intent.extras!!.getString("uid").toString()
         val galleryImage =
             registerForActivityResult(ActivityResultContracts.GetContent()) {
                 binding.imgProfile.setImageURI(it)
@@ -36,30 +41,189 @@ class ProfileActivity : AppCompatActivity() {
 
         binding.btnSubmit.setOnClickListener {
             if (isValidate()) {
-                val profileData = hashMapOf(
-                    "name" to binding.edtName.text.toString(),
-                    "age" to binding.edtAge.text.toString(),
-                    "url" to uri
-                )
+                profileRef.get().addOnSuccessListener { querySnapshot ->
+                    for (document in querySnapshot.documents) {
+                        if (document.get("userId") == auth.currentUser!!.uid) {
+                            val documentId = document.id
+                            Log.i("#xyz", documentId)
+                            val profileDocumentRef = profileRef.document(documentId)
+                            val userDataRef = profileDocumentRef.collection("user data")
+                            val userData = hashMapOf(
+                                "name" to binding.edtName.text.toString(),
+                                "age" to binding.edtAge.text.toString(),
+                                "url" to uri
+                            )
+                            userDataRef.add(userData).addOnSuccessListener {
+                                Toast.makeText(
+                                    this,
+                                    "sub collection data submit successfully done",
+                                    Toast.LENGTH_SHORT
+                                )
+                                    .show()
+                            }
+                                .addOnFailureListener {
+                                    Log.d("tag", "add document with id $it")
+                                }
+                        }
 
-                profileRef.add(profileData).addOnSuccessListener {
-                    Toast.makeText(this, "data submit successfully done", Toast.LENGTH_SHORT)
-                        .show()
-                }
-                    .addOnFailureListener {
-                        Log.d("tag", "add document with id $it")
                     }
+                }
+
+
             }
         }
 
         binding.btnRetrieve.setOnClickListener {
-            profileRef.get().addOnSuccessListener { querySnapshot ->
-                for (document in querySnapshot.documents) {
-                    val documentId = document.id
+            val auth = FirebaseAuth.getInstance()
+            auth.currentUser!!.uid
+            profileRef.whereEqualTo("userId", auth.currentUser!!.uid).get()
+                .addOnSuccessListener { it ->
+                    for (document in it) {
+                        Log.i("#azx", document.id)
+                        val profileDocumentRef = profileRef.document(document.id)
+                        val userDataRef = profileDocumentRef.collection("user data")
+                        userDataRef.get().addOnSuccessListener { it ->
+                            for (document in it.documents) {
 
+                                val documentRef = userDataRef.document(document.id)
+                                documentRef.get().addOnCompleteListener { task ->
+                                    if (task.isSuccessful) {
+                                        val documentSnapshot = task.result
+                                        if (documentSnapshot.exists()) {
+                                            // The document exists, and you can access its fields here
+                                            val name: String =
+                                                documentSnapshot.getString("name").toString()
+                                            val age = documentSnapshot.getString("age").toString()
+                                            val url = documentSnapshot.getString("url")
+                                            Log.i("#asd", name)
+                                            Log.i("#asd", age)
+                                            Log.i("#asd", url.toString())
+                                            val intent = Intent(this, MyProfileActivity::class.java)
+                                            intent.putExtra("name", name)
+                                            intent.putExtra("age", age)
+                                            intent.putExtra("url", url)
+                                            startActivity(intent)
+
+                                        } else {
+                                            // Document doesn't exist
+                                            Toast.makeText(
+                                                this,
+                                                "No data found",
+                                                Toast.LENGTH_SHORT
+                                            )
+                                                .show()
+                                        }
+                                    } else {
+                                        // An error occurred while fetching the document
+                                        Toast.makeText(
+                                            this,
+                                            "error while fetching data",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
+                                }
+                            }
+                        }
+                            .addOnFailureListener { }
+                    }
+                }.addOnFailureListener {
+                    Toast.makeText(this, "", Toast.LENGTH_SHORT).show()
                 }
-            }
         }
+
+
+//        binding.btnRetrieve.setOnClickListener {
+//            profileRef.get().addOnSuccessListener { querySnapshot ->
+//                for (document in querySnapshot.documents) {
+//                    val documentId = document.id
+//                    val profileDocumentRef = profileRef.document(documentId)
+//                    val userDataRef = profileDocumentRef.collection("user data")
+//                    //one
+//                    userDataRef.get().addOnSuccessListener { querySnapshot ->
+//                        for (document in querySnapshot.documents) {
+//                            val documentId = document.id
+//                            Log.e("#pqr", documentId)
+//
+//                            val documentRef = userDataRef.document(documentId)
+//                            documentRef.get().addOnCompleteListener { task ->
+//                                if (task.isSuccessful) {
+//                                    val documentSnapshot = task.result
+//                                    if (documentSnapshot.exists()) {
+//                                        // The document exists, and you can access its fields here
+//                                        val name: String =
+//                                            documentSnapshot.getString("name").toString()
+//                                        val age = documentSnapshot.getString("age").toString()
+//                                        val url = documentSnapshot.getString("url").toString()
+//                                        Log.i("#asd", name)
+//                                        Log.i("#asd", age)
+//                                        Log.i("#asd", url)
+//
+//                                    } else {
+//                                        // Document doesn't exist
+//                                        Toast.makeText(this, "No data found", Toast.LENGTH_SHORT)
+//                                            .show()
+//                                    }
+//                                } else {
+//                                    // An error occurred while fetching the document
+//                                    Toast.makeText(
+//                                        this,
+//                                        "error while fetching data",
+//                                        Toast.LENGTH_SHORT
+//                                    ).show()
+//                                }
+//                            }
+
+//
+//                        }
+//
+//                    }
+//                    //two
+////                    userDataRef.get().addOnSuccessListener { result ->
+////                        if (result != null) {
+//////                                    val usersList = mutableListOf<User>()
+////
+////                            for (document in result) {
+////                                document
+////
+////                                val name = document.getString("name")
+////                                val age = document.getString("age")
+////                                val url = document.getString("url")
+////                                if (name != null && age != null && url != null) {
+////                                    Log.i("#asd", name)
+////                                    Log.i("#asd", age)
+////                                    Log.i("#asd", url)
+//                                    val intent = Intent(this, MyProfileActivity::class.java)
+//                                    intent.putExtra("name", name)
+//                                    intent.putExtra("age", age)
+//                                    intent.putExtra("url", url)
+//                                    startActivity(intent)
+////
+//////                                            val user = User(name)
+//////                                            usersList.add(user)
+////                                }
+////                            }
+////
+////                            // Now you have the list of users with names
+////                            // Do something with the list here
+////                        } else {
+////                            // No data found
+////                            Toast.makeText(this, "No data found", Toast.LENGTH_SHORT).show()
+////                        }
+////                    }
+////                        .addOnFailureListener {
+////                            Toast.makeText(
+////                                this,
+////                                "user data sub-collection not found",
+////                                Toast.LENGTH_SHORT
+////                            ).show()
+////
+////                        }
+//
+//                }
+//            }.addOnFailureListener {
+//                Toast.makeText(this, "profile collection not found", Toast.LENGTH_SHORT).show()
+//            }
+//        }
     }
 
     private fun isValidate(): Boolean {

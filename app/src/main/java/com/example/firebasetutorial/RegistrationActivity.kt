@@ -16,7 +16,6 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
-import java.util.regex.Pattern
 
 
 class RegistrationActivity : AppCompatActivity() {
@@ -24,6 +23,7 @@ class RegistrationActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegistrationBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var clint: GoogleSignInClient
+    lateinit var uid: String
     private val db = FirebaseFirestore.getInstance()
     private val profileRef = db.collection("profile")
 
@@ -41,10 +41,9 @@ class RegistrationActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-
         binding.btnRegister.setOnClickListener {
             performSignUp()
-            collection()
+
         }
 
         val options = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -55,11 +54,11 @@ class RegistrationActivity : AppCompatActivity() {
         binding.btnGoogleAuth.setOnClickListener {
             val intent = clint.signInIntent
             startActivityForResult(intent, 10001)
-            collection()
+
         }
 
         binding.btnPhoneAuth.setOnClickListener {
-            val intent = Intent(this,PhoneActivity::class.java)
+            val intent = Intent(this, PhoneActivity::class.java)
             startActivity(intent)
         }
     }
@@ -73,10 +72,15 @@ class RegistrationActivity : AppCompatActivity() {
             val credential = GoogleAuthProvider.getCredential(account.idToken, null)
             FirebaseAuth.getInstance().signInWithCredential(credential)
                 .addOnCompleteListener { task ->
-                    task
+
                     if (task.isSuccessful) {
-                        val intent = Intent(this, LoginActivity::class.java)
+                        Log.i("abcd....", task.result.toString())
+                        uid = task.result.user!!.uid
+                        collection()
+                        val intent = Intent(this, ProfileActivity::class.java)
+                        intent.putExtra("uid",uid)
                         startActivity(intent)
+
                         Toast.makeText(this, "successfully Register", Toast.LENGTH_SHORT).show()
 
                     } else {
@@ -110,10 +114,12 @@ class RegistrationActivity : AppCompatActivity() {
         )
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    // Sign in success,inflate to main activity
-                    val intent = Intent(this, LoginActivity::class.java)
+                    // Sign up success,inflate to Login activity
+                    uid = task.result.user!!.uid
+                    collection()
+                    val intent = Intent(this, ProfileActivity::class.java)
+                    intent.putExtra("uid",uid)
                     startActivity(intent)
-
                     Toast.makeText(
                         baseContext,
                         "Success",
@@ -139,10 +145,9 @@ class RegistrationActivity : AppCompatActivity() {
 
     }
 
-    private fun collection(){
+    private fun collection() {
         val profileData = hashMapOf(
-            "email" to binding.edtEmail.text.toString(),
-            "pwd" to binding.edtPwd.text.toString(),
+            "userId" to uid
         )
 
         profileRef.add(profileData).addOnSuccessListener {
@@ -150,7 +155,12 @@ class RegistrationActivity : AppCompatActivity() {
                 .show()
         }
             .addOnFailureListener {
-                Log.d("tag", "add document with id $it")
+                Log.d("#tag", "add document with id $it")
+
             }
+
+
     }
+
+
 }

@@ -16,10 +16,10 @@ import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
-import com.google.firebase.auth.FirebaseAuthMissingActivityForRecaptchaException
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
+import com.google.firebase.firestore.FirebaseFirestore
 import java.util.concurrent.TimeUnit
 
 class PhoneActivity : AppCompatActivity() {
@@ -29,6 +29,10 @@ class PhoneActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var otp: String
     private lateinit var resendToken: PhoneAuthProvider.ForceResendingToken
+    lateinit var uid: String
+    private val db = FirebaseFirestore.getInstance()
+    private val profileRef = db.collection("profile")
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -133,15 +137,18 @@ class PhoneActivity : AppCompatActivity() {
         auth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
+                    uid = task.result.user!!.uid
+                    collection()
                     Toast.makeText(this, " authenticate successfully", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this, ProfileActivity::class.java)
+                    intent.putExtra("uid",uid)
                     startActivity(intent)
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "signInWithCredential:success")
 
                     val user = task.result?.user
                 } else {
-                    Toast.makeText(PhoneActivity@this,"",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(PhoneActivity@ this, "", Toast.LENGTH_SHORT).show()
                     // Sign in failed, display a message and update the UI
                     Log.w(
                         TAG,
@@ -226,5 +233,20 @@ class PhoneActivity : AppCompatActivity() {
             binding.txtResend.visibility = View.VISIBLE
             binding.txtResend.isEnabled = true
         }, 60000)
+    }
+
+    private fun collection() {
+        val profileData = hashMapOf(
+            "userId" to uid
+        )
+
+        profileRef.add(profileData).addOnSuccessListener {
+            Toast.makeText(this, "data submit successfully done", Toast.LENGTH_SHORT)
+                .show()
+        }
+            .addOnFailureListener {
+                Log.d("#tag", "add document with id $it")
+
+            }
     }
 }
