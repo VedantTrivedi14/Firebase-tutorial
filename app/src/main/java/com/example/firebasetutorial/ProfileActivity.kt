@@ -11,7 +11,10 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.example.firebasetutorial.databinding.ActivityProfileBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 
 class ProfileActivity : AppCompatActivity() {
 
@@ -19,6 +22,7 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var uri: Uri
     private val db = FirebaseFirestore.getInstance()
     private val profileRef = db.collection("profile")
+    private var storageRef = Firebase.storage
 
     //    private lateinit var uid: String
     val auth = FirebaseAuth.getInstance()
@@ -68,6 +72,29 @@ class ProfileActivity : AppCompatActivity() {
 
                     }
                 }
+
+                storageRef.getReference("profileImage").child(System.currentTimeMillis().toString())
+                    .putFile(uri).addOnSuccessListener { task ->
+                        task.metadata!!.reference!!.downloadUrl.addOnSuccessListener {
+                            val uerId = FirebaseAuth.getInstance().currentUser!!.uid
+                            val myUri = it
+                            val mapImage = mapOf(
+                                "url" to it.toString()
+                            )
+
+                            val databaseReference =
+                                FirebaseDatabase.getInstance().getReference("ProfileImages")
+                            databaseReference.child(uerId).setValue(mapImage).addOnSuccessListener {
+                                Log.i("image", myUri.toString())
+                                Toast.makeText(this, "Successful", Toast.LENGTH_SHORT).show()
+                            }.addOnFailureListener { _ ->
+                                Toast.makeText(this, it.toString(), Toast.LENGTH_SHORT).show()
+                            }
+                        }
+
+                    }.addOnFailureListener {
+                        Toast.makeText(this, "it is not uploaded", Toast.LENGTH_SHORT).show()
+                    }
 
 
             }
