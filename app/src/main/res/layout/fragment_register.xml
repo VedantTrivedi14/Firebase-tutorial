@@ -2,16 +2,17 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/register_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.LoginActivity">
+    tools:context=".fragment.RegisterFragment">
 
     <TextView
         android:id="@+id/txtLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin"
-        android:text="@string/login"
+        android:text="@string/registration"
         android:textColor="@color/black"
         android:textSize="@dimen/text_size"
         app:layout_constraintEnd_toEndOf="parent"
@@ -51,47 +52,46 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnLogin"
+        android:id="@+id/btnRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin"
-        android:text="@string/login"
+        android:text="@string/register"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txtPwd"
-        tools:ignore="DuplicateSpeakableTextCheck" />
+        app:layout_constraintTop_toBottomOf="@id/txtPwd" />
 
     <TextView
-        android:id="@+id/txtLoginNow"
+        android:id="@+id/txtRegisterNow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin"
-        android:text="@string/no_account_register_now"
+        android:layout_margin="20dp"
+        android:text="@string/already_have_an_account_login_now"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnLogin" />
-
+        app:layout_constraintTop_toBottomOf="@id/btnRegister" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnGoogleAuth"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin"
-        android:text="@string/login_with_google_account"
+        android:layout_margin="20dp"
+        android:text="@string/register_with_google_account"
         app:icon="@drawable/baseline_g_translate_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txtLoginNow" />
+        app:layout_constraintTop_toBottomOf="@id/txtRegisterNow" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnPhoneAuth"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin"
-        android:text="@string/login_with_phone"
+        android:layout_margin="20dp"
+        android:text="Register With Phone"
         app:icon="@drawable/baseline_phone_android_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btnGoogleAuth" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

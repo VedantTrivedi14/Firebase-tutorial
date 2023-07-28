@@ -1,4 +1,4 @@
-package com.example.firebasetutorial
+package com.example.firebasetutorial.model
 
 data class Photos(
     val id: String,

@@ -1,10 +1,10 @@
-package com.example.firebasetutorial
+package com.example.firebasetutorial.retrofit
 
+import com.example.firebasetutorial.model.Photos
 import retrofit2.Call
 
 import retrofit2.http.GET
 import retrofit2.http.Headers
-import retrofit2.http.Query
 
 interface ApiInterface {
 

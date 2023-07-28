@@ -3,8 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/menu_api"
+        android:icon="@drawable/baseline_image_24"
+        android:title="Api call"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/menu_logout"
         android:icon="@drawable/baseline_logout_24"
         android:title="Logout"
         app:showAsAction="always" />
+
 </menu>

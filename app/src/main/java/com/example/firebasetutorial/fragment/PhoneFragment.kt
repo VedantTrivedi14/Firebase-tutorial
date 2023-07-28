@@ -1,6 +1,7 @@
-package com.example.firebasetutorial
+package com.example.firebasetutorial.fragment
 
-import android.content.ContentValues.TAG
+import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -8,10 +9,14 @@ import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import com.example.firebasetutorial.databinding.ActivityPhoneBinding
+import com.example.firebasetutorial.R
+import com.example.firebasetutorial.databinding.FragmentPhoneBinding
+import com.example.firebasetutorial.view.ProfileActivity
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.FirebaseAuth
@@ -22,9 +27,10 @@ import com.google.firebase.auth.PhoneAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.concurrent.TimeUnit
 
-class PhoneActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityPhoneBinding
+class PhoneFragment : Fragment() {
+
+    private lateinit var binding: FragmentPhoneBinding
     private lateinit var phoneNumber: String
     private lateinit var auth: FirebaseAuth
     private lateinit var otp: String
@@ -32,16 +38,33 @@ class PhoneActivity : AppCompatActivity() {
     lateinit var uid: String
     private val db = FirebaseFirestore.getInstance()
     private val profileRef = db.collection("profile")
-
+    val profileFragment = ProfileFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityPhoneBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        arguments?.let {
+
+        }
+
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        // Inflate the layout for this fragment
+        binding = FragmentPhoneBinding.inflate(inflater, container, false)
+        setHasOptionsMenu(true)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         auth = FirebaseAuth.getInstance()
         addTextChangeListener()
         resendOTPTvVisibility()
+
 
         binding.countryCode.registerCarrierNumberEditText(binding.edtNumber)
 
@@ -68,7 +91,7 @@ class PhoneActivity : AppCompatActivity() {
         val options = PhoneAuthOptions.newBuilder(auth)
             .setPhoneNumber(phoneNumber) // Phone number to verify
             .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
-            .setActivity(this) // Activity (for callback binding)
+            .setActivity(requireActivity()) // Activity (for callback binding)
             .setCallbacks(callbacks) // OnVerificationStateChangedCallbacks
             .build()
         PhoneAuthProvider.verifyPhoneNumber(options)
@@ -78,7 +101,7 @@ class PhoneActivity : AppCompatActivity() {
         var isValid = true
         if (binding.edtNumber.length() != 10) {
 
-            Toast.makeText(this, "Enter correct number", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Enter correct number", Toast.LENGTH_SHORT).show()
             isValid = false
         }
         return isValid
@@ -93,22 +116,22 @@ class PhoneActivity : AppCompatActivity() {
             // 2 - Auto-retrieval. On some devices Google Play services can automatically
             //     detect the incoming verification SMS and perform verification without
             //     user action.
-            Log.d(TAG, "onVerificationCompleted:$credential")
+            Log.d(ContentValues.TAG, "onVerificationCompleted:$credential")
             signInWithPhoneAuthCredential(credential)
         }
 
         override fun onVerificationFailed(e: FirebaseException) {
             // This callback is invoked in an invalid request for verification is made,
             // for instance if the the phone number format is not valid.
-            Log.w(TAG, "onVerificationFailed", e)
+            Log.w(ContentValues.TAG, "onVerificationFailed", e)
 
             if (e is FirebaseAuthInvalidCredentialsException) {
                 // Invalid request
 
-                Log.d("Tag", "onVerified failed:${e.toString()}")
+                Log.d("Tag", "onVerified failed:$e")
             } else if (e is FirebaseTooManyRequestsException) {
                 // The SMS quota for the project has been exceeded
-                Log.d("Tag", "onVerified failed:${e.toString()}")
+                Log.d("Tag", "onVerified failed:$e")
             }
 //
 
@@ -134,24 +157,32 @@ class PhoneActivity : AppCompatActivity() {
     }
 
     private fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
+
         auth.signInWithCredential(credential)
-            .addOnCompleteListener(this) { task ->
+                                //this
+            .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     uid = task.result.user!!.uid
                     collection()
-                    Toast.makeText(this, " authenticate successfully", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, ProfileActivity::class.java)
-                    intent.putExtra("uid",uid)
-                    startActivity(intent)
+                    Toast.makeText(requireContext(), " authenticate successfully", Toast.LENGTH_SHORT).show()
+                    val bundle  = Bundle()
+                    bundle.putString("uid",uid)
+                    profileFragment.arguments = bundle
+                    requireActivity().supportFragmentManager.beginTransaction()
+                        .replace(R.id.phone_fragment, profileFragment).commit()
+//                    val intent = Intent(this, ProfileActivity::class.java)
+//
+//                    intent.putExtra("uid",uid)
+//                    startActivity(intent)
                     // Sign in success, update UI with the signed-in user's information
-                    Log.d(TAG, "signInWithCredential:success")
+                    Log.d(ContentValues.TAG, "signInWithCredential:success")
 
                     val user = task.result?.user
                 } else {
-                    Toast.makeText(PhoneActivity@ this, "", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "", Toast.LENGTH_SHORT).show()
                     // Sign in failed, display a message and update the UI
                     Log.w(
-                        TAG,
+                        ContentValues.TAG,
                         "signInWithCredential:failure ${task.exception.toString()}",
                         task.exception
                     )
@@ -204,7 +235,7 @@ class PhoneActivity : AppCompatActivity() {
             val credential: PhoneAuthCredential = PhoneAuthProvider.getCredential(otp, typeOTP)
             signInWithPhoneAuthCredential(credential)
         } else {
-            Toast.makeText(this, "Please Enter OTP", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Please Enter OTP", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -212,7 +243,7 @@ class PhoneActivity : AppCompatActivity() {
         val options = PhoneAuthOptions.newBuilder(auth)
             .setPhoneNumber(phoneNumber) // Phone number to verify
             .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
-            .setActivity(this) // Activity (for callback binding)
+            .setActivity(requireActivity()) // Activity (for callback binding)
             .setCallbacks(callbacks) // OnVerificationStateChangedCallbacks
             .setForceResendingToken(resendToken)
             .build()
@@ -241,12 +272,27 @@ class PhoneActivity : AppCompatActivity() {
         )
 
         profileRef.add(profileData).addOnSuccessListener {
-            Toast.makeText(this, "data submit successfully done", Toast.LENGTH_SHORT)
+            Toast.makeText(requireContext(), "data submit successfully done", Toast.LENGTH_SHORT)
                 .show()
         }
             .addOnFailureListener {
                 Log.d("#tag", "add document with id $it")
 
+            }
+    }
+
+
+
+
+
+    companion object {
+
+        @JvmStatic
+        fun newInstance(param1: String, param2: String) =
+            PhoneFragment().apply {
+                arguments = Bundle().apply {
+
+                }
             }
     }
 }

@@ -1,4 +1,4 @@
-package com.example.firebasetutorial
+package com.example.firebasetutorial.retrofit
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
