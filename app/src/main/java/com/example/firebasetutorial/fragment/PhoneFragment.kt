@@ -38,15 +38,7 @@ class PhoneFragment : Fragment() {
     lateinit var uid: String
     private val db = FirebaseFirestore.getInstance()
     private val profileRef = db.collection("profile")
-    val profileFragment = ProfileFragment()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-
-        }
-
-    }
+    private val profileFragment = ProfileFragment()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -169,7 +161,7 @@ class PhoneFragment : Fragment() {
                     bundle.putString("uid",uid)
                     profileFragment.arguments = bundle
                     requireActivity().supportFragmentManager.beginTransaction()
-                        .replace(R.id.phone_fragment, profileFragment).commit()
+                        .replace(R.id.mainActivity, profileFragment).addToBackStack(null).commit()
 //                    val intent = Intent(this, ProfileActivity::class.java)
 //
 //                    intent.putExtra("uid",uid)

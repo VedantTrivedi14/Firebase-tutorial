@@ -12,18 +12,12 @@ import com.example.firebasetutorial.databinding.FragmentMyProfileBinding
 
 class MyProfileFragment : Fragment() {
 
-    private lateinit var binding : FragmentMyProfileBinding
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-
-        }
-    }
+    private lateinit var binding: FragmentMyProfileBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         binding = FragmentMyProfileBinding.inflate(inflater, container, false)
         setHasOptionsMenu(true)
@@ -33,17 +27,10 @@ class MyProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-        assert(arguments != null)
-        val name  = requireArguments().getString("name")
         binding.txtName.text = requireArguments().getString("name")
-        binding.txtAge.text =  requireArguments().getString("age")
+        binding.txtAge.text = requireArguments().getString("age")
 
-
-            Log.i("#url", requireArguments().getString("url").toString())
-//        binding.txtName.text = intent.extras!!.getString("name")
-//        binding.txtAge.text = intent.extras!!.getString("age")
-
+        Log.i("#url", requireArguments().getString("url").toString())
         Glide.with(requireContext())
             .load(requireArguments().getString("url").toString())
             .into(binding.imgProfile)
@@ -51,16 +38,5 @@ class MyProfileFragment : Fragment() {
         Glide.with(this).load(requireArguments().getString("url").toString())
             .diskCacheStrategy(DiskCacheStrategy.ALL) // Cache the image
             .into(binding.imgProfile)
-    }
-
-    companion object {
-
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            MyProfileFragment().apply {
-                arguments = Bundle().apply {
-
-                }
-            }
     }
 }

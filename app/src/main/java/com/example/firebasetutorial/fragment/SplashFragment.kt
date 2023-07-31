@@ -1,13 +1,15 @@
 package com.example.firebasetutorial.fragment
 
+
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.example.firebasetutorial.R
+
 import com.example.firebasetutorial.databinding.FragmentSplashBinding
 import com.google.firebase.auth.FirebaseAuth
 
@@ -26,7 +28,7 @@ class SplashFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         binding = FragmentSplashBinding.inflate(inflater, container, false)
         setHasOptionsMenu(true)
@@ -41,21 +43,22 @@ class SplashFragment : Fragment() {
             // creating a new intent
 //            binding.imgSplash.visibility = View.GONE
             if (auth.currentUser != null) {
-                parentFragmentManager.beginTransaction()
-                    .replace(R.id.splash_fragment, ProfileFragment()).addToBackStack(null).commit()
+
+                requireActivity().supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.mainActivity, ProfileFragment())
+                    .addToBackStack(null).commit()
             } else {
-               parentFragmentManager.beginTransaction()
-                    .replace(R.id.splash_fragment, LoginFragment()).addToBackStack(null).commit()
+
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(R.id.mainActivity, LoginFragment())
+                    .addToBackStack(null).commit()
             }
 
         }, 2000)
-
-
         Log.i("#myq", "transition success")
 
     }
 
-    companion object {
-
-    }
+    companion object
 }

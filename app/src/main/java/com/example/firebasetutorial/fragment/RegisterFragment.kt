@@ -34,7 +34,7 @@ class RegisterFragment : Fragment() {
     private val db = FirebaseFirestore.getInstance()
     private val profileRef = db.collection("profile")
 
-    val profileFragment = ProfileFragment()
+    private val profileFragment = ProfileFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,7 +62,7 @@ class RegisterFragment : Fragment() {
 
         binding.txtRegisterNow.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.register_fragment, LoginFragment()).commit()
+                .replace(R.id.mainActivity, LoginFragment()).addToBackStack(null).commit()
 //            val intent = Intent(this, LoginActivity::class.java)
 //            startActivity(intent)
         }
@@ -86,7 +86,7 @@ class RegisterFragment : Fragment() {
 
         binding.btnPhoneAuth.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.register_fragment, PhoneFragment()).commit()
+                .replace(R.id.mainActivity, PhoneFragment()).addToBackStack(null).commit()
 //            val intent = Intent(this, PhoneActivity::class.java)
 //            startActivity(intent)
         }
@@ -113,7 +113,7 @@ class RegisterFragment : Fragment() {
                         bundle.putString("uid", uid)
                         profileFragment.arguments = bundle
                         requireActivity().supportFragmentManager.beginTransaction()
-                            .replace(R.id.phone_fragment, profileFragment).commit()
+                            .replace(R.id.mainActivity, profileFragment).addToBackStack(null).commit()
 
 //                        val intent = Intent(this, ProfileActivity::class.java)
 //                        intent.putExtra("uid",uid)
@@ -140,7 +140,7 @@ class RegisterFragment : Fragment() {
         super.onStart()
         if (FirebaseAuth.getInstance().currentUser != null) {
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.login_fragment, ProfileFragment()).commit()
+                .replace(R.id.mainActivity, ProfileFragment()).addToBackStack(null).commit()
 //            val intent = Intent(this, ProfileActivity::class.java)
 //            startActivity(intent)
         }
@@ -172,7 +172,7 @@ class RegisterFragment : Fragment() {
                     bundle.putString("uid", uid)
                     profileFragment.arguments = bundle
                     requireActivity().supportFragmentManager.beginTransaction()
-                        .replace(R.id.phone_fragment, profileFragment).commit()
+                        .replace(R.id.mainActivity, profileFragment).addToBackStack(null).commit()
 //                    val intent = Intent(this, ProfileActivity::class.java)
 //                    intent.putExtra("uid",uid)
 //                    startActivity(intent)

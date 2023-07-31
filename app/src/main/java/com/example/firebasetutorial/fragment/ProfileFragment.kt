@@ -32,7 +32,7 @@ class ProfileFragment : Fragment() {
     private var storageRef = Firebase.storage
 
     private val auth = FirebaseAuth.getInstance()
-    val myProfileFragment = MyProfileFragment()
+    private val myProfileFragment = MyProfileFragment()
 
     private lateinit var binding: FragmentProfileBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -155,7 +155,8 @@ class ProfileFragment : Fragment() {
                                             bundle.putString("url", url)
                                             myProfileFragment.arguments = bundle
                                             requireActivity().supportFragmentManager.beginTransaction()
-                                                .replace(R.id.phone_fragment, myProfileFragment)
+                                                .replace(R.id.mainActivity, myProfileFragment)
+                                                .addToBackStack(null)
                                                 .commit()
 
 //                                            val intent = Intent(this, MyProfileActivity::class.java)
@@ -230,14 +231,14 @@ class ProfileFragment : Fragment() {
             R.id.menu_logout -> {
                 FirebaseAuth.getInstance().signOut()
                 requireActivity().supportFragmentManager.beginTransaction()
-                    .replace(R.id.profile_fragment, LoginFragment()).commit()
+                    .replace(R.id.mainActivity, LoginFragment()).addToBackStack(null).commit()
 //                val intent = Intent(this, LoginActivity::class.java)
 //                startActivity(intent)
             }
 
             R.id.menu_api -> {
                 requireActivity().supportFragmentManager.beginTransaction()
-                    .replace(R.id.profile_fragment, ApiFragment()).commit()
+                    .replace(R.id.mainActivity, ApiFragment()).addToBackStack(null).commit()
 //                val intent = Intent(this, ApiActivity::class.java)
 //                startActivity(intent)
             }

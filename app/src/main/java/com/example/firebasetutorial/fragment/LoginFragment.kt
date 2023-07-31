@@ -1,19 +1,14 @@
 package com.example.firebasetutorial.fragment
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Patterns
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.example.firebasetutorial.R
 import com.example.firebasetutorial.databinding.FragmentLoginBinding
-import com.example.firebasetutorial.databinding.FragmentSplashBinding
-import com.example.firebasetutorial.view.PhoneActivity
-import com.example.firebasetutorial.view.ProfileActivity
-import com.example.firebasetutorial.view.RegistrationActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -28,17 +23,10 @@ class LoginFragment : Fragment() {
     private lateinit var clint: GoogleSignInClient
     private lateinit var auth: FirebaseAuth
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-
-        }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
         setHasOptionsMenu(true)
         return binding.root
@@ -49,20 +37,15 @@ class LoginFragment : Fragment() {
 
         auth = Firebase.auth
 
-
-
         binding.txtLoginNow.setOnClickListener {
-
             requireActivity().supportFragmentManager.beginTransaction().addToBackStack(null)
-                .replace(R.id.login_fragment, RegisterFragment()).commit()
-//            val intent = Intent(this, RegistrationActivity::class.java)
-//            startActivity(intent)
+                .replace(R.id.mainActivity, RegisterFragment()).addToBackStack(null).commit()
         }
 
         binding.btnLogin.setOnClickListener {
             performLogin()
-
         }
+
         val options = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
@@ -75,24 +58,10 @@ class LoginFragment : Fragment() {
         }
 //
         binding.btnPhoneAuth.setOnClickListener {
-
-
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.login_fragment, PhoneFragment()).commit()
-//            val intent = Intent(this, PhoneActivity::class.java)
-//            startActivity(intent)
+                .replace(R.id.mainActivity, PhoneFragment()).addToBackStack(null).commit()
+
         }
-    }
-
-    companion object {
-
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            LoginFragment().apply {
-                arguments = Bundle().apply {
-
-                }
-            }
     }
 
     private fun performLogin() {
@@ -108,12 +77,12 @@ class LoginFragment : Fragment() {
             binding.edtEmail.text.toString(),
             binding.edtPwd.text.toString()
         )
-                                //this
-            .addOnCompleteListener() { task ->
+            //this
+            .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     // Sign in success,  inflate to main activity
                     requireActivity().supportFragmentManager.beginTransaction()
-                        .replace(R.id.login_fragment, ProfileFragment()).commit()
+                        .replace(R.id.mainActivity, ProfileFragment()).addToBackStack(null).commit()
 //                    val intent = Intent(this, ProfileActivity::class.java)
 //                    startActivity(intent)
 
@@ -141,5 +110,4 @@ class LoginFragment : Fragment() {
                 ).show()
             }
     }
-
 }

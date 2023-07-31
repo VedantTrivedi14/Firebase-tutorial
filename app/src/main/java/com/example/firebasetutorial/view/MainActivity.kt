@@ -1,30 +1,9 @@
-package com.example.firebasetutorial
+package com.example.firebasetutorial.view
 
-import android.content.Intent
-import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.TextUtils.replace
-import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
-import android.widget.Toast
-import androidx.activity.result.ActivityResultCallback
-import androidx.activity.result.contract.ActivityResultContracts
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.example.firebasetutorial.databinding.ActivityMainBinding
-import com.example.firebasetutorial.fragment.ProfileFragment
+import com.example.firebasetutorial.R
 import com.example.firebasetutorial.fragment.SplashFragment
-import com.example.firebasetutorial.view.LoginActivity
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.firestore.DocumentReference
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.QuerySnapshot
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.ktx.storage
 
 class MainActivity : AppCompatActivity() {
 
@@ -40,14 +19,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_main)
-
-        supportFragmentManager.commit {
-            replace<SplashFragment()>(R.id.main_activity)
-            setReorderingAllowed(true)
-            addToBackStack("name") // Name can be null
-        }
-
-        supportFragmentManager.beginTransaction().replace(R.id.main_activity, SplashFragment()).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.mainActivity, SplashFragment()).commit()
 
 //        storageRef = FirebaseStorage.getInstance()
 //

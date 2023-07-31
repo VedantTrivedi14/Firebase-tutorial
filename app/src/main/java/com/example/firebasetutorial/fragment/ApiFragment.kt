@@ -2,43 +2,31 @@ package com.example.firebasetutorial.fragment
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.firebasetutorial.R
 import com.example.firebasetutorial.adapter.RecyclerViewAdapter
 import com.example.firebasetutorial.databinding.FragmentApiBinding
-import com.example.firebasetutorial.databinding.FragmentSplashBinding
 import com.example.firebasetutorial.model.Photos
 import com.example.firebasetutorial.retrofit.RetrofitInstance
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-
 class ApiFragment : Fragment() {
 
     private lateinit var binding: FragmentApiBinding
     private var list: ArrayList<String> = ArrayList()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-
-        }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentApiBinding.inflate(inflater, container, false)
         setHasOptionsMenu(true)
         return binding.root
-        // Inflate the layout for this fragment
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -46,7 +34,6 @@ class ApiFragment : Fragment() {
 
         getData()
     }
-
 
     private fun getData() {
 
@@ -77,17 +64,5 @@ class ApiFragment : Fragment() {
             }
 
         })
-
-    }
-
-    companion object {
-
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ApiFragment().apply {
-                arguments = Bundle().apply {
-
-                }
-            }
     }
 }
